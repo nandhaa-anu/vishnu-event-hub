@@ -1,0 +1,231 @@
+.ticket-premium-wrapper {
+    perspective: 1000px;
+}
+
+.v-ticket {
+    background: var(--white);
+    border-radius: 2rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+}
+
+.v-ticket-accent {
+    height: 80px;
+    width: 100%;
+    padding: 1.5rem;
+}
+
+.v-ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.v-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 800;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.4rem 0.8rem;
+    border-radius: 9999px;
+    backdrop-filter: blur(8px);
+}
+
+.v-category {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    background: rgba(0, 0, 0, 0.1);
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+}
+
+.v-ticket-content {
+    padding: 2.5rem;
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+
+.v-ticket-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230f172a' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+.v-event-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--primary);
+}
+
+.v-meta-grid {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.v-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.v-icon-blue {
+    color: var(--accent-electric);
+}
+
+.v-icon-pink {
+    color: var(--accent-pink);
+}
+
+/* Perforation Effect */
+.v-perforation {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem -2rem;
+    position: relative;
+}
+
+.v-hole-left,
+.v-hole-right {
+    width: 2rem;
+    height: 2rem;
+    background: var(--bg-main);
+    /* Match body bg to create cut effect */
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    position: relative;
+    z-index: 2;
+}
+
+.v-hole-left {
+    margin-right: -1rem;
+    left: -0.5rem;
+    box-shadow: inset -5px 0 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+.v-hole-right {
+    margin-left: -1rem;
+    right: -0.5rem;
+    box-shadow: inset 5px 0 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+.v-dash-line {
+    flex: 1;
+    height: 0;
+    border-bottom: 2px dashed var(--border);
+    opacity: 0.5;
+}
+
+.v-attendee-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.v-details-box {
+    flex: 1;
+}
+
+.v-field-group {
+    margin-bottom: 1rem;
+}
+
+.v-field-group label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+}
+
+.v-field-value {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin: 0;
+}
+
+.v-details-row {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.v-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--accent-purple);
+}
+
+.v-qr-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.v-qr-frame {
+    padding: 0.75rem;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.v-scan-label {
+    font-size: 0.65rem;
+    font-weight: 900;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+}
+
+.v-ticket-actions {
+    display: flex;
+    border-top: 1px solid var(--border);
+    background: var(--bg-surface);
+}
+
+.v-ticket-btn {
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+}
+
+.v-ticket-btn:hover {
+    background: var(--white);
+    color: var(--accent-electric);
+}
+
+.v-vert-divider {
+    width: 1px;
+    background: var(--border);
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}
