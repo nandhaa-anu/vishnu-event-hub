@@ -6,16 +6,20 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../services/supabase";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [cooldown, setCooldown] = useState(false);
     const router = useRouter();
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (loading || cooldown) return;
+
         setLoading(true);
         setError('');
 
@@ -40,8 +44,23 @@ export default function LoginPage() {
             }
 
             router.push(`/dashboard/${userData.role}`);
+            toast.success("Login successful! Redirecting...");
         } catch (err: any) {
-            setError("AUTHENTICATION_FAILED: INVALID_CREDENTIALS");
+            console.error("Login error:", err);
+            let errorMessage = "AUTHENTICATION_FAILED: INVALID_CREDENTIALS";
+
+            if (err?.message?.toLowerCase().includes("rate limit") || err?.status === 429) {
+                errorMessage = "RATE_LIMIT_EXCEEDED: PLEASE WAIT BEFORE RETRYING.";
+                setCooldown(true);
+                setTimeout(() => setCooldown(false), 15000); // 15 sec cooldown
+                toast.error("Too many attempts. Please wait 15 seconds.");
+            } else if (err?.message === "Failed to fetch" || err?.message?.includes("fetch")) {
+                errorMessage = "NETWORK_ERROR: UNABLE TO CONTACT AUTH SERVER. CHECK ENV VARS.";
+                toast.error("Network error. Please check your connection or Server Configuration.");
+            } else {
+                toast.error("Authentication failed. Please check your credentials.");
+            }
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -118,11 +137,14 @@ export default function LoginPage() {
 
                         <button
                             type="submit"
-                            disabled={loading}
-                            className="w-full py-5 rounded-2xl font-black flex items-center justify-center gap-3 transition-all bg-text-main text-bg-main hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 uppercase text-xs tracking-widest"
+                            disabled={loading || cooldown}
+                            className={`w-full py-5 rounded-2xl font-black flex items-center justify-center gap-3 transition-all uppercase text-xs tracking-widest ${cooldown
+                                    ? "bg-rose-500/20 text-rose-500 cursor-not-allowed border border-rose-500/30"
+                                    : "bg-text-main text-bg-main hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+                                }`}
                         >
-                            {loading ? "AUTHENTICATING..." : "EXECUTE_LOGIN"}
-                            {!loading && <ArrowRight size={18} />}
+                            {loading ? "AUTHENTICATING..." : cooldown ? "SYSTEM_COOLDOWN ACTIVE" : "EXECUTE_LOGIN"}
+                            {!loading && !cooldown && <ArrowRight size={18} />}
                         </button>
                     </form>
                 </div>

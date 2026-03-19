@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import Background from "./components/Background";
+import { Toaster } from "react-hot-toast";
 
 const spaceGrotesk = Space_Grotesk({
     subsets: ["latin"],
@@ -25,6 +26,16 @@ export default function RootLayout({
             <body className={`${spaceGrotesk.className} antialiased`}>
                 <ThemeProvider>
                     <AuthProvider>
+                        <Toaster
+                            position="top-center"
+                            toastOptions={{
+                                style: {
+                                    background: '#0a0a0a',
+                                    color: '#fff',
+                                    border: '1px solid rgba(255,255,255,0.1)'
+                                }
+                            }}
+                        />
                         <Background />
                         {children}
                     </AuthProvider>

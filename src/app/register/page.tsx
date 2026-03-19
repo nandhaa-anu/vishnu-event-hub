@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../services/supabase";
+import toast from "react-hot-toast";
 
 const roles = [
     { id: 'student', title: 'STUDENT_NODE', icon: <User size={18} />, desc: "Access events & digital pass." },
@@ -22,10 +23,13 @@ export default function RegisterPage() {
     const [department, setDepartment] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [cooldown, setCooldown] = useState(false);
     const router = useRouter();
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (loading || cooldown) return;
+
         setLoading(true);
         setError('');
 
@@ -64,9 +68,26 @@ export default function RegisterPage() {
 
             if (dbError) throw dbError;
 
+            toast.success("Registration successful! Initializing...");
             router.push(`/dashboard/${selectedRole}`);
         } catch (err: any) {
-            setError(`SYSTEM_ERROR: ${err.message.toUpperCase()}`);
+            console.error("Registration error:", err);
+            let errorMessage = `SYSTEM_ERROR: ${err?.message?.toUpperCase() || "UNKNOWN ERROR"}`;
+
+            if (err?.message?.toLowerCase().includes("rate limit") || err?.status === 429) {
+                errorMessage = "RATE_LIMIT_EXCEEDED: PLEASE WAIT BEFORE RETRYING.";
+                setCooldown(true);
+                setTimeout(() => setCooldown(false), 20000); // 20 sec cooldown
+                toast.error("Too many signup attempts. Please wait 20 seconds.");
+            } else if (err?.message === "Failed to fetch" || err?.message?.includes("fetch")) {
+                errorMessage = "NETWORK_ERROR: UNABLE TO CONTACT AUTH SERVER. CHECK ENV VARS.";
+                toast.error("Network error. Please check your connection or Server Configuration.");
+            } else if (err?.message?.toLowerCase().includes("already registered")) {
+                toast.error("Account already exists. Please login instead.");
+            } else {
+                toast.error(err?.message || "Registration failed. Please try again.");
+            }
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -193,11 +214,14 @@ export default function RegisterPage() {
 
                         <button
                             type="submit"
-                            disabled={loading}
-                            className="w-full py-6 rounded-2xl font-black flex items-center justify-center gap-3 transition-all bg-text-main text-bg-main hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 uppercase text-xs tracking-[0.2em]"
+                            disabled={loading || cooldown}
+                            className={`w-full py-6 rounded-2xl font-black flex items-center justify-center gap-3 transition-all uppercase text-xs tracking-[0.2em] ${cooldown
+                                    ? "bg-rose-500/20 text-rose-500 cursor-not-allowed border border-rose-500/30"
+                                    : "bg-text-main text-bg-main hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
+                                }`}
                         >
-                            {loading ? "INITIALIZING_NODE..." : "EXECUTE_REGISTRATION"}
-                            {!loading && <ArrowRight size={18} />}
+                            {loading ? "INITIALIZING_NODE..." : cooldown ? "SYSTEM_COOLDOWN ACTIVE" : "EXECUTE_REGISTRATION"}
+                            {!loading && !cooldown && <ArrowRight size={18} />}
                         </button>
                     </form>
                 </div>
