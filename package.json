@@ -3,11 +3,12 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "preview": "vite preview",
-        "next-dev": "next dev",
-        "next-build": "next build"
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "vite-dev": "vite",
+        "vite-build": "vite build",
+        "vite-preview": "vite preview"
     },
     "dependencies": {
         "@supabase/ssr": "^0.9.0",
