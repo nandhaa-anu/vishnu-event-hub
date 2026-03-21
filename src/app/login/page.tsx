@@ -106,7 +106,7 @@ export default function LoginPage() {
                                     required
                                     type="email"
                                     placeholder="USER_IDENTIFIER (EMAIL)"
-                                    className="w-full bg-card-bg/10 border-2 border-border-main/20 rounded-2xl py-5 pl-14 pr-6 font-mono text-xs uppercase tracking-widest text-text-main focus:border-accent-blue/50 outline-none transition-all placeholder:text-slate-600"
+                                    className="w-full bg-card-bg/10 border-2 border-border-main/20 rounded-2xl py-5 pl-14 pr-6 font-mono text-xs tracking-widest text-text-main focus:border-accent-blue/50 outline-none transition-all placeholder:text-slate-600 placeholder:uppercase"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
@@ -118,7 +118,7 @@ export default function LoginPage() {
                                     required
                                     type="password"
                                     placeholder="SECURITY_KEY (PASSWORD)"
-                                    className="w-full bg-card-bg/10 border-2 border-border-main/20 rounded-2xl py-5 pl-14 pr-6 font-mono text-xs uppercase tracking-widest text-text-main focus:border-accent-violet/50 outline-none transition-all placeholder:text-slate-600"
+                                    className="w-full bg-card-bg/10 border-2 border-border-main/20 rounded-2xl py-5 pl-14 pr-6 font-mono text-xs tracking-widest text-text-main focus:border-accent-violet/50 outline-none transition-all placeholder:text-slate-600 placeholder:uppercase"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
@@ -139,8 +139,8 @@ export default function LoginPage() {
                             type="submit"
                             disabled={loading || cooldown}
                             className={`w-full py-5 rounded-2xl font-black flex items-center justify-center gap-3 transition-all uppercase text-xs tracking-widest ${cooldown
-                                    ? "bg-rose-500/20 text-rose-500 cursor-not-allowed border border-rose-500/30"
-                                    : "bg-text-main text-bg-main hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+                                ? "bg-rose-500/20 text-rose-500 cursor-not-allowed border border-rose-500/30"
+                                : "bg-text-main text-bg-main hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
                                 }`}
                         >
                             {loading ? "AUTHENTICATING..." : cooldown ? "SYSTEM_COOLDOWN ACTIVE" : "EXECUTE_LOGIN"}

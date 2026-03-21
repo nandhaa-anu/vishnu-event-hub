@@ -73,7 +73,7 @@ export default function Login() {
                             required
                             type="email"
                             placeholder="NODE_IDENTIFIER (EMAIL)"
-                            className="w-full py-4 pl-12 pr-4 rounded-xl border border-white/10 bg-white/5 text-white outline-none focus:border-amber-500 transition-all font-mono text-xs uppercase"
+                            className="w-full py-4 pl-12 pr-4 rounded-xl border border-white/10 bg-white/5 text-white outline-none focus:border-amber-500 transition-all font-mono text-xs placeholder:uppercase"
                             onChange={e => setEmail(e.target.value)}
                         />
                     </div>
@@ -83,7 +83,7 @@ export default function Login() {
                             required
                             type="password"
                             placeholder="SECURITY_KEY (PASSWORD)"
-                            className="w-full py-4 pl-12 pr-4 rounded-xl border border-white/10 bg-white/5 text-white outline-none focus:border-purple-500 transition-all font-mono text-xs uppercase"
+                            className="w-full py-4 pl-12 pr-4 rounded-xl border border-white/10 bg-white/5 text-white outline-none focus:border-purple-500 transition-all font-mono text-xs placeholder:uppercase"
                             onChange={e => setPassword(e.target.value)}
                         />
                     </div>
@@ -92,8 +92,8 @@ export default function Login() {
                         type="submit"
                         disabled={loading || cooldown}
                         className={`w-full font-black py-4 rounded-xl transition-all uppercase tracking-widest text-xs flex items-center justify-center gap-3 ${cooldown
-                                ? "bg-rose-500/20 text-rose-500 cursor-not-allowed border border-rose-500/30"
-                                : "bg-white text-black hover:bg-amber-500 hover:text-white disabled:opacity-50"
+                            ? "bg-rose-500/20 text-rose-500 cursor-not-allowed border border-rose-500/30"
+                            : "bg-white text-black hover:bg-amber-500 hover:text-white disabled:opacity-50"
                             }`}
                     >
                         {loading ? "AUTHENTICATING..." : cooldown ? "SYSTEM_COOLDOWN ACTIVE" : "EXECUTE_LOGIN"}

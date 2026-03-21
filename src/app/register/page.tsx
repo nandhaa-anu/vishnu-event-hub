@@ -145,7 +145,7 @@ export default function RegisterPage() {
                                     required
                                     type="text"
                                     placeholder="FULL_NAME"
-                                    className="w-full bg-card-bg/10 border-2 border-border-main/20 rounded-2xl py-5 pl-14 pr-6 font-mono text-xs uppercase tracking-widest text-text-main focus:border-accent-blue/50 outline-none transition-all placeholder:text-slate-600"
+                                    className="w-full bg-card-bg/10 border-2 border-border-main/20 rounded-2xl py-5 pl-14 pr-6 font-mono text-xs tracking-widest text-text-main focus:border-accent-blue/50 outline-none transition-all placeholder:text-slate-600 placeholder:uppercase"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                 />
@@ -157,7 +157,7 @@ export default function RegisterPage() {
                                     required
                                     type="text"
                                     placeholder="DEPARTMENT (E.G. CSE)"
-                                    className="w-full bg-card-bg/10 border-2 border-border-main/20 rounded-2xl py-5 pl-14 pr-6 font-mono text-xs uppercase tracking-widest text-text-main focus:border-accent-emerald/50 outline-none transition-all placeholder:text-slate-600"
+                                    className="w-full bg-card-bg/10 border-2 border-border-main/20 rounded-2xl py-5 pl-14 pr-6 font-mono text-xs tracking-widest text-text-main focus:border-accent-emerald/50 outline-none transition-all placeholder:text-slate-600 placeholder:uppercase"
                                     value={department}
                                     onChange={(e) => setDepartment(e.target.value)}
                                 />
@@ -170,7 +170,7 @@ export default function RegisterPage() {
                                         required
                                         type="text"
                                         placeholder="ROLL_NUMBER (E.G. 20PA1A05XX)"
-                                        className="w-full bg-card-bg/10 border-2 border-border-main/20 rounded-2xl py-5 pl-14 pr-6 font-mono text-xs uppercase tracking-widest text-text-main focus:border-accent-rose/50 outline-none transition-all placeholder:text-slate-600"
+                                        className="w-full bg-card-bg/10 border-2 border-border-main/20 rounded-2xl py-5 pl-14 pr-6 font-mono text-xs tracking-widest text-text-main focus:border-accent-rose/50 outline-none transition-all placeholder:text-slate-600 placeholder:uppercase"
                                         value={rollNo}
                                         onChange={(e) => setRollNo(e.target.value)}
                                     />
@@ -183,7 +183,7 @@ export default function RegisterPage() {
                                     required
                                     type="email"
                                     placeholder="NODE_IDENTIFIER (EMAIL_ADDRESS)"
-                                    className="w-full bg-card-bg/10 border-2 border-border-main/20 rounded-2xl py-5 pl-14 pr-6 font-mono text-xs uppercase tracking-widest text-text-main focus:border-accent-blue/50 outline-none transition-all placeholder:text-slate-600"
+                                    className="w-full bg-card-bg/10 border-2 border-border-main/20 rounded-2xl py-5 pl-14 pr-6 font-mono text-xs tracking-widest text-text-main focus:border-accent-blue/50 outline-none transition-all placeholder:text-slate-600 placeholder:uppercase"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
@@ -195,7 +195,7 @@ export default function RegisterPage() {
                                     required
                                     type="password"
                                     placeholder="SECURITY_KEY (PASSWORD)"
-                                    className="w-full bg-card-bg/10 border-2 border-border-main/20 rounded-2xl py-5 pl-14 pr-6 font-mono text-xs uppercase tracking-widest text-text-main focus:border-accent-violet/50 outline-none transition-all placeholder:text-slate-600"
+                                    className="w-full bg-card-bg/10 border-2 border-border-main/20 rounded-2xl py-5 pl-14 pr-6 font-mono text-xs tracking-widest text-text-main focus:border-accent-violet/50 outline-none transition-all placeholder:text-slate-600 placeholder:uppercase"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
@@ -216,8 +216,8 @@ export default function RegisterPage() {
                             type="submit"
                             disabled={loading || cooldown}
                             className={`w-full py-6 rounded-2xl font-black flex items-center justify-center gap-3 transition-all uppercase text-xs tracking-[0.2em] ${cooldown
-                                    ? "bg-rose-500/20 text-rose-500 cursor-not-allowed border border-rose-500/30"
-                                    : "bg-text-main text-bg-main hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
+                                ? "bg-rose-500/20 text-rose-500 cursor-not-allowed border border-rose-500/30"
+                                : "bg-text-main text-bg-main hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
                                 }`}
                         >
                             {loading ? "INITIALIZING_NODE..." : cooldown ? "SYSTEM_COOLDOWN ACTIVE" : "EXECUTE_REGISTRATION"}
