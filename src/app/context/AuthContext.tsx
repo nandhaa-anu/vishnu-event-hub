@@ -22,40 +22,55 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const getSession = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            setUser(session?.user ?? null);
+        let mounted = true;
 
-            if (session?.user) {
-                const { data: profile } = await supabase
+        const fetchProfile = async (userId: string) => {
+            try {
+                const { data, error } = await supabase
                     .from('users')
                     .select('role')
-                    .eq('id', session.user.id)
+                    .eq('id', userId)
                     .single();
 
-                setRole(profile?.role ?? 'student');
+                if (error) throw error;
+                if (mounted) setRole(data?.role ?? 'student');
+            } catch (error) {
+                console.error("AuthContext: Failed to fetch user role:", error);
+                if (mounted) setRole('student'); // Fallback gracefully
             }
-            setLoading(false);
         };
 
-        getSession();
-
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+        // 1. Explicitly fetch initial session exactly once
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            if (!mounted) return;
             setUser(session?.user ?? null);
             if (session?.user) {
-                const { data: profile } = await supabase
-                    .from('users')
-                    .select('role')
-                    .eq('id', session.user.id)
-                    .single();
-                setRole(profile?.role ?? 'student');
+                fetchProfile(session.user.id).finally(() => {
+                    if (mounted) setLoading(false);
+                });
+            } else {
+                setLoading(false);
+            }
+        });
+
+        // 2. ONLY respond to actual changes to prevent duplicate database loads
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+            if (event === 'INITIAL_SESSION') return; // Handled by getSession above
+            if (!mounted) return;
+
+            setUser(session?.user ?? null);
+            if (session?.user) {
+                await fetchProfile(session.user.id);
             } else {
                 setRole(null);
             }
-            setLoading(false);
+            if (mounted) setLoading(false);
         });
 
-        return () => subscription.unsubscribe();
+        return () => {
+            mounted = false;
+            subscription.unsubscribe();
+        };
     }, []);
 
     return (
