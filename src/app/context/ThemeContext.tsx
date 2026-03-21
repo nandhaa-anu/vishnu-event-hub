@@ -12,7 +12,8 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-    const [theme, setTheme] = useState<Theme>("light");
+    // Default to dark mode for cyberpunk aesthetic
+    const [theme, setTheme] = useState<Theme>("dark");
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -20,9 +21,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         if (savedTheme) {
             setTheme(savedTheme);
             document.documentElement.classList.toggle("dark", savedTheme === "dark");
-        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        } else {
+            // Force dark by default if no preference
             setTheme("dark");
             document.documentElement.classList.add("dark");
+            localStorage.setItem("theme", "dark");
         }
         setMounted(true);
     }, []);
@@ -34,8 +37,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         document.documentElement.classList.toggle("dark", newTheme === "dark");
     };
 
+    // Removed the visibility: hidden hack since HTML now defaults to dark serverside.
     if (!mounted) {
-        return <div style={{ visibility: "hidden" }}>{children}</div>;
+        return <>{children}</>;
     }
 
     return (

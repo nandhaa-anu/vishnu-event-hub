@@ -22,8 +22,8 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body className={`${spaceGrotesk.className} antialiased`}>
+        <html lang="en" className="dark bg-[#0a0a0a]">
+            <body className={`${spaceGrotesk.className} antialiased min-h-screen text-white`}>
                 <ThemeProvider>
                     <AuthProvider>
                         <Toaster
