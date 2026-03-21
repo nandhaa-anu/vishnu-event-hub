@@ -1,11 +1,11 @@
 import ClickSpark from "./components/ClickSpark";
 import PillNav from "./components/PillNav";
-import Home from "./pages/Home";
-import Events from "./pages/Events";
-import Gallery from "./pages/Gallery";
-import Team from "./pages/Team";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
+import Home from "./views/Home";
+import Events from "./views/Events";
+import Gallery from "./views/Gallery";
+import Team from "./views/Team";
+import Signup from "./views/Signup";
+import Login from "./views/Login";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
